@@ -1,7 +1,22 @@
+
+
 /* Step 1: using axios, send a GET request to the following URL 
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+
+ const gitHubAccounts = axios.get('https://api.github.com/users/MichaelBaynon')
+ .then(data => {
+   console.log(data)
+ })
+
+ gitHubAccounts
+ .then(data => {
+   console.log('response', data)
+ })
+ .catch(error => {
+ console.log('GitHub api is working', error)
+ })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -24,7 +39,50 @@
           user, and adding that card to the DOM.
 */
 
+data.forEach(data => {
+  
+  gitHubAccounts.appendChild(createGitHubCard(data.name))
+})
+
 const followersArray = [];
+
+ function createGitHubCard(userObject) {
+   const card = document.createElement('div')
+   const imageURL = document.createElement('img')
+   const cardInfo = document.createElement('div')
+   const name = document.createElement('h3')
+   const username = document.createElement('p')
+   const location = document.createElement('p')
+   const profile = document.createElement('a')
+   const followers = document.createElement('p')
+   const following = document.createElement('p')
+   const bio = document.createElement('p')
+
+
+card.appendChild(imageURL)   
+card.appendChild(cardInfo)   
+card.appendChild(name)   
+card.appendChild(username)   
+card.appendChild(location)   
+card.appendChild(profile)   
+card.appendChild(followers)   
+card.appendChild(following)
+card.appendChild(bio)   
+ 
+ 
+   card.classList.add('card')
+   name.classList.add('name')
+   username.classList.add('username')
+   location.classList.add('p')
+
+location.textContent = `Location: ${location}`
+
+
+return card
+
+ }
+
+ 
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
