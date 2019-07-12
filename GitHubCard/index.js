@@ -59,6 +59,21 @@ instructors.forEach(instructor => {
   })
 })
 
+axios.get(`https://api.github.com/users/followers`)
+.then(res => res.data.slice(0, 2))
+.then(followers => {
+  followers.forEach(follower => {
+    axios.get(`https://api.github.com/users/${follower.login}`)
+    .then(res => {
+      const card = createCard(res.data)
+      cards.append(card)
+    })
+  })
+})
+  
+  
+
+
  function createCard(user) {
    const card = document.createElement('div')
 card.classList.add('card')
