@@ -43,6 +43,22 @@ axios.get('https://api.github.com/users/MichaelBaynon')
 
 const followersArray = [];
 
+const instructors = [
+  "tetondan",
+  "dustinmyers",
+  'justsml',
+  'luishrd',
+  "bigknell",
+]
+
+instructors.forEach(instructor => {
+  axios.get(`https://api.github.com/users/${instructor}`)
+  .then(res => {
+    const card = createCard(res.data)
+    cards.append(card)
+  })
+})
+
  function createCard(user) {
    const card = document.createElement('div')
 card.classList.add('card')
