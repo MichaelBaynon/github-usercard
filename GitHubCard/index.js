@@ -5,18 +5,18 @@
            https://api.github.com/users/<your name>
 */
 
- const gitHubAccounts = axios.get('https://api.github.com/users/MichaelBaynon')
- .then(data => {
-   console.log(data)
+const cards = document.querySelector('.cards')
+
+axios.get('https://api.github.com/users/MichaelBaynon')
+ .then(res => {
+   console.log(res.data)
+   const card = createCard(res.data)
+   cards.append(card)
  })
 
- gitHubAccounts
- .then(data => {
-   console.log('response', data)
- })
- .catch(error => {
- console.log('GitHub api is working', error)
- })
+
+
+ 
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -39,48 +39,64 @@
           user, and adding that card to the DOM.
 */
 
-data.forEach(data => {
-  
-  gitHubAccounts.appendChild(createGitHubCard(data.name))
-})
+
 
 const followersArray = [];
 
- function createGitHubCard(userObject) {
+ function createCard(user) {
    const card = document.createElement('div')
-   const imageURL = document.createElement('img')
+card.classList.add('card')
+
+   const avatar = document.createElement('img')
+avatar.src= user.avatar_url
+
    const cardInfo = document.createElement('div')
+cardInfo.classList.add('card-info')
+
    const name = document.createElement('h3')
+name.classList.add('name')
+name.textContent = user.name;
+
    const username = document.createElement('p')
+username.classList.add('username')
+username.textContent = user.login;
+
    const location = document.createElement('p')
+location.textContent = `Location: ${user.location || 'none'}`
+
    const profile = document.createElement('a')
+profile.textContent = 'Profile: '
+
+   const link = document.createElement('a')
+link.href = user.html_url
+link.textContent = user.html_url
+
    const followers = document.createElement('p')
+followers.textContent = `Followers: ${user.followers}`
+
    const following = document.createElement('p')
+   following.textContent = `Following: ${user.following}`
+
    const bio = document.createElement('p')
+   bio.textContent = `Bio: ${user.bio || 'none'}`
 
 
-card.appendChild(imageURL)   
-card.appendChild(cardInfo)   
-card.appendChild(name)   
-card.appendChild(username)   
-card.appendChild(location)   
-card.appendChild(profile)   
-card.appendChild(followers)   
-card.appendChild(following)
-card.appendChild(bio)   
- 
- 
-   card.classList.add('card')
-   name.classList.add('name')
-   username.classList.add('username')
-   location.classList.add('p')
 
-location.textContent = `Location: ${location}`
-
+card.append(avatar)
+card.append(cardInfo)
+cardInfo.append(name, 
+  username,
+  location,
+  profile,
+  followers,
+  following,
+  bio
+  
+  )
+  profile.append(link)
 
 return card
-
- }
+}
 
  
 
